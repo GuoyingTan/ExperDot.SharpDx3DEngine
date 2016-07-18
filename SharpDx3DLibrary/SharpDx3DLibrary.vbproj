@@ -119,22 +119,26 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <None Include="ClassDiagram1.cd" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class\Model\Base\IPhysicalUnit.vb" />
     <Compile Include="Class\Model\Base\IRigidBody.vb" />
     <Compile Include="Class\Model\Base\RigidBodyBase.vb" />
-    <Compile Include="Class\Model\Ground\GroudBlock.vb" />
-    <Compile Include="Class\Model\Ground\Ground.vb" />
-    <Compile Include="Class\Space\CameraBase.vb" />
+    <Compile Include="Class\Model\RigidBody\Ground\GroudBlock.vb" />
+    <Compile Include="Class\Model\RigidBody\Ground\Ground.vb" />
+    <Compile Include="Class\Space\Base\CameraBase.vb" />
+    <Compile Include="Class\Space\Base\ICamera.vb" />
+    <Compile Include="Class\Space\Base\IWorld.vb" />
+    <Compile Include="Class\Space\Base\WorldBase.vb" />
     <Compile Include="Class\Space\WorldSpace.vb" />
     <Compile Include="Class\Space\CameraSpace.vb" />
-    <Compile Include="Class\Model\Human\Bone.vb" />
-    <Compile Include="Class\Model\Human\BoneIndex.vb" />
-    <Compile Include="Common\CustomMath.vb" />
+    <Compile Include="Class\Model\RigidBody\Human\Bone.vb" />
+    <Compile Include="Class\Model\RigidBody\Human\BoneIndex.vb" />
+    <Compile Include="Common\GraphicsUtilities.vb" />
     <Compile Include="Class\View\DepthBufferCube.vb" />
-    <Compile Include="Class\Model\Human\Human.vb" />
+    <Compile Include="Class\Model\RigidBody\Human\Human.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="UserControl\User3DBox.xaml.vb">
       <DependentUpon>User3DBox.xaml</DependentUpon>
@@ -177,7 +181,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

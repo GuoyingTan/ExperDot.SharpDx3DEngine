@@ -35,8 +35,8 @@ Public NotInheritable Class User3DBox
             Dim x = (e.GetCurrentPoint(Me).Position.X - OldPoint.X) / 10
             Dim y = (e.GetCurrentPoint(Me).Position.Y - OldPoint.Y) / 10
             If x = 0 And y = 0 Then Return
-            MyDepthBufferCube.Camera.EyeOfView += New Vector3(x, y, 0)
-            MyDepthBufferCube.Camera.TargetOfView += New Vector3(x, y, 0)
+            MyDepthBufferCube.Camera.Eye += New Vector3(x, y, 0)
+            MyDepthBufferCube.Camera.Target += New Vector3(x, y, 0)
             OldPoint = e.GetCurrentPoint(Me).Position
         End If
     End Sub
@@ -45,14 +45,12 @@ Public NotInheritable Class User3DBox
         isMouseDown = True
         OldPoint = e.GetCurrentPoint(Me).Position
     End Sub
-
     Private Sub User3DBox_PointerReleased(sender As Object, e As PointerRoutedEventArgs) Handles Me.PointerReleased
         isMouseDown = False
     End Sub
-
     Private Sub User3DBox_PointerWheelChanged(sender As Object, e As PointerRoutedEventArgs) Handles Me.PointerWheelChanged
         Dim d As Double = e.GetCurrentPoint(Me).Properties.MouseWheelDelta / 10
-        MyDepthBufferCube.Camera.EyeOfView += New Vector3(0, 0, d)
-        MyDepthBufferCube.Camera.TargetOfView += New Vector3(0, 0, d)
+        MyDepthBufferCube.Camera.Eye += New Vector3(0, 0, d)
+        MyDepthBufferCube.Camera.Target += New Vector3(0, 0, d)
     End Sub
 End Class

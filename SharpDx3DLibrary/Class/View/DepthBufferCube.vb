@@ -8,7 +8,7 @@ Public Class DepthBufferCube
     Implements IDisposable
 
     Private Const FrameCount As Integer = 3
-    Private Const NumCubes As Integer = 1000
+    Private Const NumCubes As Integer = 30 '最大模型数量
 
     Private viewport As ViewportF
     Private scissorRect As Rectangle
@@ -46,9 +46,7 @@ Public Class DepthBufferCube
     '
     Private screenPanel As SwapChainPanel
     Private Const SwapBufferCount As Integer = 3
-    Public MouseVec As New Vector3
 
-    Private tempSingle As Single
     Public Camera As New CameraSpace
     ''' <summary>
     ''' 初始化
@@ -59,18 +57,11 @@ Public Class DepthBufferCube
         LoadPipeline(scPanel)
         LoadAssets()
     End Sub
-    Public Sub SetMouseVec(x As Single, y As Single, z As Single)
-        MouseVec += New Vector3(x, y, z)
-        If MouseVec.Length > 5 Then
-            MouseVec = Vector3.Normalize(MouseVec) * 5
-        End If
-    End Sub
     ''' <summary>
     ''' 更新
     ''' </summary>
     Public Sub Update()
-
-        Dim matrices() As CustomMath.Transform = Camera.GetTransforms.ToArray
+        Dim matrices() As GraphicsUtilities.Transform = Camera.GetTransforms.ToArray
         If matrices.Length > 0 Then
             Dim pointer As IntPtr = constantBuffer.Map(0)
             Utilities.Write(pointer, matrices, 0, matrices.Length)
@@ -265,7 +256,7 @@ Public Class DepthBufferCube
 
         ' Create the vertex buffer.
         Dim aspectRatio As Single = viewport.Width / viewport.Height
-        Dim vertices As CustomMath.Vertex() = CustomMath.CreateCube(10, 10, 10)
+        Dim vertices As GraphicsUtilities.Vertex() = GraphicsUtilities.CreateCube(10, 10, 10)
         Dim vertexBufferSize As Integer = Utilities.SizeOf(vertices)
         ' Note: using upload heaps to transfer static data like vert buffers is not 
         ' recommended. Every time the GPU needs it, the upload heap will be marshalled 
@@ -281,7 +272,7 @@ Public Class DepthBufferCube
         ' Initialize the vertex buffer view.
         vertexBufferView = New VertexBufferView()
         vertexBufferView.BufferLocation = vertexBuffer.GPUVirtualAddress
-        vertexBufferView.StrideInBytes = Utilities.SizeOf(Of CustomMath.Vertex)()
+        vertexBufferView.StrideInBytes = Utilities.SizeOf(Of GraphicsUtilities.Vertex)()
         vertexBufferView.SizeInBytes = vertexBufferSize
 
 
@@ -315,7 +306,7 @@ Public Class DepthBufferCube
             .Flags = DescriptorHeapFlags.ShaderVisible
         })
 
-        Dim constantBufferSize As Integer = (Utilities.SizeOf(Of CustomMath.Transform)() + 255) And Not 255
+        Dim constantBufferSize As Integer = (Utilities.SizeOf(Of GraphicsUtilities.Transform)() + 255) And Not 255
         constantBuffer = device.CreateCommittedResource(New HeapProperties(HeapType.Upload), HeapFlags.None, ResourceDescription.Buffer(constantBufferSize * NumCubes), ResourceStates.GenericRead)
         constantBufferDescriptorSize = device.GetDescriptorHandleIncrementSize(DescriptorHeapType.ConstantBufferViewShaderResourceViewUnorderedAccessView)
 
@@ -329,7 +320,7 @@ Public Class DepthBufferCube
 
         For i As Integer = 0 To NumCubes - 1
             device.CreateConstantBufferView(cbvDesc, cbHandleHeapStart)
-            cbvDesc.BufferLocation += Utilities.SizeOf(Of CustomMath.Transform)()
+            cbvDesc.BufferLocation += Utilities.SizeOf(Of GraphicsUtilities.Transform)()
             cbHandleHeapStart += constantBufferDescriptorSize
         Next
         InitBundles()

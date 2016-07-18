@@ -3,23 +3,23 @@ Imports SharpDx3DLibrary
 
 Public Class Ground
     Inherits RigidBodyBase
-    'Public rQua As Quaternion
-    'Public Overrides Property Qua As Quaternion
-    ''    Set(value As Quaternion)
-    ''        If IsNewQua Then
-    ''            IsNewQua = False
-    ''            rQua = value
-    ''            rQua.Invert()
-    ''        End If
-    ''        mQua = value
-    ''    End Set
-    ''    Get
-    ''        Return rQua * mQua
-    ''    End Get
-    ''End Property
-    'Private mQua As Quaternion
-    'Private IsNewQua As Boolean = True
-
+    Public rQua As New Quaternion(0, 0, 0, 1)
+    Public Overrides Property Qua As Quaternion
+        Set(value As Quaternion)
+            If IsNewQua Then
+                IsNewQua = False
+                rQua = value
+                rQua.Invert()
+                rQua.Normalize()
+            End If
+            mQua = value
+        End Set
+        Get
+            Return Quaternion.Normalize(rQua * mQua)
+        End Get
+    End Property
+    Private mQua As New Quaternion(0, 0, 0, 1)
+    Private IsNewQua As Boolean = True
     Public Sub New()
         MyBase.New
         OnCreate()

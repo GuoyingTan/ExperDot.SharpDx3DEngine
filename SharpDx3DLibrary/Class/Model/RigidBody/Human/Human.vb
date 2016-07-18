@@ -1,5 +1,4 @@
 ﻿Imports SharpDX
-
 Public Class Human
     Inherits RigidBodyBase
     Public RootBone As Bone
@@ -8,12 +7,14 @@ Public Class Human
         CalcBone(RootBone)
     End Sub
     Public Sub UpdateBone(qua As Quaternion, index As Integer)
-        Children(index).Qua = qua
-        CalcBone(RootBone)
+        qua.Normalize()
+        DirectCast(Children(index), Bone).Qua = qua
+        CalcBone(DirectCast(Children(index), Bone).ParentBone)
     End Sub
     Private Sub CalcBone(parent As Bone)
-        For Each SubBone In parent.Children
-            Dim tempLoc = (Matrix.Translation(SubBone.RaletiveLoc) * Matrix.RotationQuaternion(SubBone.Qua)).TranslationVector
+        For Each SubBone As Bone In parent.ChildrenBone
+            SubBone.BoneQua = Quaternion.Normalize(Me.Qua * SubBone.Qua)
+            Dim tempLoc = (Matrix.Translation(SubBone.RaletiveLoc) * Matrix.RotationQuaternion(SubBone.BoneQua)).TranslationVector
             SubBone.AbsoluteLoc = parent.AbsoluteLoc + tempLoc
             SubBone.Location = parent.AbsoluteLoc + tempLoc / 2
             CalcBone(SubBone)
@@ -44,14 +45,15 @@ Public Class Human
     Private Sub CreateBone()
         For i = 0 To BoneIndexArr.Count - 1
             Children.Add(New Bone(BoneIndexArr(i).Loc, BoneIndexArr(i).Scale))
+            DirectCast(Children(i), Bone).Index = i
         Next
         For i = 0 To BoneIndexArr.Count - 1
-            Dim tempBone = DirectCast(Children(i), Bone)
-            tempBone.Parent = Children(BoneIndexArr(i).ParentIndex)
+            DirectCast(Children(i), Bone).ParentBone = Children(BoneIndexArr(i).ParentIndex)
             For Each SubIndex In BoneIndexArr(i).ChildIndexArr
-                tempBone.Children.Add(Children(SubIndex))
+                DirectCast(Children(i), Bone).ChildrenBone.Add(Children(SubIndex))
             Next
         Next
         RootBone = DirectCast(Children(0), Bone)
+        RootBone.Parent = RootBone
     End Sub
 End Class

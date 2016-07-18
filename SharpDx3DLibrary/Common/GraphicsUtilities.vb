@@ -1,6 +1,5 @@
 ﻿Imports SharpDX
-
-Public Class CustomMath
+Public Class GraphicsUtilities
     Public Structure Vertex
         Public Position As Vector3
         Public Color As Vector4
@@ -16,6 +15,9 @@ Public Class CustomMath
         Public Unused2 As Matrix
         Public Unused3 As Matrix
     End Structure
+    ''' <summary>
+    ''' 返回一个指定长宽高的六面体的顶点数组
+    ''' </summary>
     Public Shared Function CreateCube(w As Single, h As Single, d As Single) As Vertex()
         w = w / 2
         h = h / 2
