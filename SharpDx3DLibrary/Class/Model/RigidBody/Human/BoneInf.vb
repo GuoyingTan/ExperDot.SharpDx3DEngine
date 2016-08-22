@@ -1,5 +1,8 @@
 ﻿Imports SharpDX
-Public Class BoneIndex
+''' <summary>
+''' 表示一个用于描述骨骼信息的对象
+''' </summary>
+Public Class BoneInf
     Public Loc As Vector3
     Public Scale As Vector3
     Public ParentIndex As Integer

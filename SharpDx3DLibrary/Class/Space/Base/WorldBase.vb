@@ -5,14 +5,13 @@ Public Class WorldBase
     Implements IWorld
     Public Property RigidBodys As New List(Of IRigidBody)
     Public Property ModelMatrix As Matrix() Implements IWorld.ModelMatrix
-
     ''' <summary>
     ''' 更新当前世界所有物体的模型矩阵
     ''' </summary>
-    Public Sub Update()
+    Public Sub Update() Implements IWorld.Update
         Dim mList As New List(Of Matrix)
         CalcMatrix(RigidBodys, New Vector3(1, 1, 1), New Quaternion(0, 0, 0, 1), Vector3.Zero, mList)
-        ModelMatrix = MList.ToArray
+        ModelMatrix = mList.ToArray
     End Sub
     ''' <summary>
     ''' 计算指定物体List（包括它的子物体）的顶点变换矩阵

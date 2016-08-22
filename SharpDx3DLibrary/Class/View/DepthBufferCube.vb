@@ -278,7 +278,8 @@ Public Class DepthBufferCube
 
         'Create Index Buffer
         'Indices
-        Dim indices As Integer() = New Integer() {0, 1, 2, 0, 2, 3,
+        Dim indices As Integer() = New Integer() {
+            0, 1, 2, 0, 2, 3,
             4, 6, 5, 4, 7, 6,
             8, 9, 10, 8, 10, 11,
             12, 14, 13, 12, 15, 14,

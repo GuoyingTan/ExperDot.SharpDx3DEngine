@@ -135,7 +135,7 @@
     <Compile Include="Class\Space\WorldSpace.vb" />
     <Compile Include="Class\Space\CameraSpace.vb" />
     <Compile Include="Class\Model\RigidBody\Human\Bone.vb" />
-    <Compile Include="Class\Model\RigidBody\Human\BoneIndex.vb" />
+    <Compile Include="Class\Model\RigidBody\Human\BoneInf.vb" />
     <Compile Include="Common\GraphicsUtilities.vb" />
     <Compile Include="Class\View\DepthBufferCube.vb" />
     <Compile Include="Class\Model\RigidBody\Human\Human.vb" />

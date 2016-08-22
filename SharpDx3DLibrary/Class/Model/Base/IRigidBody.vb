@@ -1,4 +1,7 @@
 ﻿Imports SharpDX
+''' <summary>
+''' 表示一个可包含若干子对象的刚体
+''' </summary>
 Public Interface IRigidBody
     ''' <summary>
     ''' 子物体

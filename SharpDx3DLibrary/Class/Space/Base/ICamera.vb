@@ -1,6 +1,6 @@
 ﻿Imports SharpDX
 ''' <summary>
-''' 用于视变换的摄像机接口
+''' 表示用于视变换的摄像机
 ''' </summary>
 Public Interface ICamera
     ''' <summary>

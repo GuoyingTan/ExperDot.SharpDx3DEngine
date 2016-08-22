@@ -4,8 +4,12 @@
 ''' </summary>
 Public Interface IWorld
     ''' <summary>
-    ''' 所有模型的顶点变换矩阵
+    ''' 模型顶点变换矩阵的数组
     ''' </summary>
     ''' <returns></returns>
     Property ModelMatrix As Matrix()
+    ''' <summary>
+    ''' 更新模型顶点变换矩阵
+    ''' </summary>
+    Sub Update()
 End Interface

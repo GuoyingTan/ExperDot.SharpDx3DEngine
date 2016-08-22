@@ -4,34 +4,49 @@
 ''' </summary>
 Public Class Bone
     Inherits RigidBodyBase
-    Public rQua As New Quaternion(0, 0, 0, 1)
     Public Overrides Property Qua As Quaternion
         Set(value As Quaternion)
             If IsNewQua Then
                 IsNewQua = False
-                rQua = value
-                rQua.Invert()
-                rQua.Normalize()
+                sQua = value
+                sQua.Invert()
+                sQua.Normalize()
             End If
             mQua = value
         End Set
         Get
-            'Dim rV As New Vector3(0, 0, 1)
-            'Dim rS As Single = Math.PI / 2
-            'Dim tQ As New Quaternion(rV * Math.Cos(rS / 2), Math.Sin(rS / 2))
-            Return Quaternion.Normalize(rQua * mQua)
+            Return Quaternion.Normalize(sQua * mQua)
         End Get
     End Property
-    Private mQua As New Quaternion(0, 0, 0, 1)
-    Private IsNewQua As Boolean = True
+    ''' <summary>
+    ''' 绝对坐标
+    ''' </summary>
     Public AbsoluteLoc As Vector3
-    Public RaletiveLoc As Vector3
+    ''' <summary>
+    ''' 相对坐标
+    ''' </summary>
+    Public RelativeLoc As Vector3
+    ''' <summary>
+    ''' 父骨骼
+    ''' </summary>
     Public ParentBone As Bone
+    ''' <summary>
+    ''' 骨骼相对旋转
+    ''' </summary>
     Public BoneQua As New Quaternion(0, 0, 0, 1)
+    ''' <summary>
+    ''' 子骨骼
+    ''' </summary>
     Public ChildrenBone As New List(Of Bone)
+    ''' <summary>
+    ''' 索引
+    ''' </summary>
     Public Index As Integer
+    Private mQua As New Quaternion(0, 0, 0, 1)
+    Private sQua As New Quaternion(0, 0, 0, 1)
+    Private IsNewQua As Boolean = True
     Public Sub New(loc As Vector3, scale As Vector3)
-        Me.RaletiveLoc = loc * 10
+        Me.RelativeLoc = loc * 10
         Me.Scale = scale
     End Sub
 End Class
